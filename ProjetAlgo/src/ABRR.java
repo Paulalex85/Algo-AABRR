@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class ABRR {
 	
@@ -35,5 +37,25 @@ public class ABRR {
 		this.sad = sad;
 	}
 
+	public List<Integer> get_list_prefixe(){
+		List<Integer> list_value_prefixe = new ArrayList<Integer>();
+		
+		parcours_prefixe(this, list_value_prefixe);
+		
+		return list_value_prefixe;
+	}
+	
+	private List<Integer> parcours_prefixe(ABRR arbre, List<Integer> list) {
+		list.add(arbre.val);
+		if(arbre.sag != null) {
+			parcours_prefixe(arbre.sag, list);
+		}
+		
+		if(arbre.sad != null) {
+			parcours_prefixe(arbre.sad, list);
+		}
+		
+		return list;
+	}
 	
 }
