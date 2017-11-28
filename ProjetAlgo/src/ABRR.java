@@ -1,46 +1,38 @@
 
 public class ABRR {
-	protected ABRR a, sag, sad;
-	protected int min, max;
 	
-	public ABRR(ABRR a, ABRR sag, ABRR sad, int min, int max) {
-		this.a = a;
+	private int val;
+	private ABRR sag;
+	private ABRR sad;
+	
+	public ABRR (int val, ABRR sag, ABRR sad) {
+		this.val = val;
 		this.sag = sag;
 		this.sad = sad;
-		this.min = min;
-		this.max = max;
 	}
-	
-	
-	public ABRR getA() {
-		return a;
+
+	public int getVal() {
+		return val;
 	}
-	public void setA(ABRR a) {
-		this.a = a;
+
+	public void setVal(int val) {
+		this.val = val;
 	}
+
 	public ABRR getSag() {
 		return sag;
 	}
+
 	public void setSag(ABRR sag) {
 		this.sag = sag;
 	}
+
 	public ABRR getSad() {
 		return sad;
 	}
+
 	public void setSad(ABRR sad) {
 		this.sad = sad;
-	}
-	public int getMin() {
-		return min;
-	}
-	public void setMin(int min) {
-		this.min = min;
-	}
-	public int getMax() {
-		return max;
-	}
-	public void setMax(int max) {
-		this.max = max;
 	}
 
 	
