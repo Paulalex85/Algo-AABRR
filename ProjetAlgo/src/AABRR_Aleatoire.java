@@ -1,7 +1,10 @@
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
 
 public class AABRR_Aleatoire {
 
+	int current_min;
 	
 	public AABRR_Aleatoire() {
 		
@@ -20,28 +23,30 @@ public class AABRR_Aleatoire {
 		if( p > 1 && q > 1) {
 			
 			//créer une pile pour créer l'arbre
-			Stack<AABRR> pile = new Stack<AABRR>(); 
-			pile.push(generate);
+			Queue<AABRR> queue = new LinkedList<AABRR>();
+			
+			queue.add(generate);
 			int reste = p -1; // correspond au nombre a creer
 			
-			while(reste > 0 && !pile.isEmpty()) { // tant que il faut ajouter des noeuds
-				if(pile.peek().getSag() == null) {
-					pile.peek().setSag(new AABRR(null, null, null, 0, 0));
-					pile.push(pile.peek().getSag());
+			while(reste > 0 && !queue.isEmpty()) { // tant que il faut ajouter des noeuds
+				if(queue.peek().getSag() == null) {
+					queue.peek().setSag(new AABRR(null, null, null, 0, 0));
+					queue.add(queue.peek().getSag());
 					reste--;
 				}
-				else if(pile.peek().getSad() == null) {
-					pile.peek().setSad(new AABRR(null, null, null, 0, 0));
-					pile.push(pile.peek().getSad());
+				else if(queue.peek().getSad() == null) {
+					queue.peek().setSad(new AABRR(null, null, null, 0, 0));
+					queue.add(queue.peek().getSad());
 					reste--;
 				}
 				else {
-					pile.pop();
+					queue.poll();
 				}
 			}
 			
 			//on parcours le AABRR pour fixer les valeurs min max et créer le ABRR
-			
+			current_min = 0;
+			ParcoursInfixeAABRR(generate, (int)(q/p));
 			
 			
 		}
@@ -49,9 +54,24 @@ public class AABRR_Aleatoire {
 		return generate;
 	}
 	
-	private void ParcoursInfixeAABRR(AABRR arbre) {
-		//CreationABRR(arbre.getSag());
-		//action
-		//CreationABRR(arbre.getSad());
+	private void ParcoursInfixeAABRR(AABRR arbre, int interval) {
+		if(arbre.getSag() != null) {
+			ParcoursInfixeAABRR(arbre.getSag(), interval);
+		}
+		CreationABRR(arbre, current_min, current_min + interval);
+		if(arbre.getSad() != null) {
+			ParcoursInfixeAABRR(arbre.getSad(), interval);
+		}
 	}
+	
+	private void CreationABRR(AABRR arbre,  int min, int max) {
+		current_min = max;
+		arbre.setMax(max);
+		arbre.setMin(min);
+		Random rand = new Random();
+		for(int i = 0; i < 3; i++) {
+			arbre.addValueABRR(min + rand.nextInt(max - min) , arbre.getA());
+		}
+	}
+	
 }
