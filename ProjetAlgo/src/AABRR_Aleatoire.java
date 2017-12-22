@@ -66,11 +66,11 @@ public class AABRR_Aleatoire {
 	
 	private void CreationABRR(AABRR arbre,  int min, int max) {
 		current_min = max;
-		arbre.setMax(max);
+		arbre.setMax(max-1);
 		arbre.setMin(min);
 		Random rand = new Random();
 		for(int i = 0; i < 3; i++) {
-			arbre.addValueABRR(min + rand.nextInt(max - min) , arbre.getA());
+			arbre.addValueABRR(min + rand.nextInt(arbre.getMax() - min) , arbre.getA());
 		}
 	}
 	

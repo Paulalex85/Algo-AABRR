@@ -28,6 +28,7 @@ public class AABRR_Vers_Fichier {
 			for(int i = 0; i < list_line.size(); i++) {
 				writer.println(list_line.get(i));
 			}
+			writer.close();
 			
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
