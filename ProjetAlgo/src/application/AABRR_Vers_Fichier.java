@@ -1,3 +1,4 @@
+package application;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -12,18 +13,18 @@ public class AABRR_Vers_Fichier {
 	}
 	
 	/***
-	 * Fonction pour créer le fichier 
+	 * Fonction pour crï¿½er le fichier 
 	 * @param arbre prend l'arbre courant a ecrire
 	 * @param nom_du_fichier Ne pas mettre le .txt
 	 */
 	public void execute(AABRR arbre, String nom_du_fichier) {
-		List<String> list_line = new ArrayList<String>(); // contient toutes les lignes a écrire
+		List<String> list_line = new ArrayList<String>(); // contient toutes les lignes a ï¿½crire
 		
 		parcoursArbre(arbre, list_line);
 		
 		PrintWriter writer;
 		try {
-			writer = new PrintWriter(nom_du_fichier + ".txt", "UTF-8"); // crée le fichier
+			writer = new PrintWriter(nom_du_fichier + ".txt", "UTF-8"); // crï¿½e le fichier
 			
 			for(int i = 0; i < list_line.size(); i++) {
 				writer.println(list_line.get(i));

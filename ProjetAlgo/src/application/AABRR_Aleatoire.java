@@ -1,3 +1,4 @@
+package application;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -14,15 +15,15 @@ public class AABRR_Aleatoire {
 	/***
 	 * 
 	 * @param p : Nombres de Noeuds
-	 * @param q : Valeur max des données de l'arbre, doit etre > 1
-	 * @return retourne l'arbre aabrr généré
+	 * @param q : Valeur max des donnï¿½es de l'arbre, doit etre > 1
+	 * @return retourne l'arbre aabrr gï¿½nï¿½rï¿½
 	 */
 	public AABRR Generation(int p, int q) {
 		AABRR generate = new AABRR(null, null, null, 0, 0);
 		
 		if( p > 1 && q > 1) {
 			
-			//créer une pile pour créer l'arbre
+			//crï¿½er une pile pour crï¿½er l'arbre
 			Queue<AABRR> queue = new LinkedList<AABRR>();
 			
 			queue.add(generate);
@@ -44,7 +45,7 @@ public class AABRR_Aleatoire {
 				}
 			}
 			
-			//on parcours le AABRR pour fixer les valeurs min max et créer le ABRR
+			//on parcours le AABRR pour fixer les valeurs min max et crï¿½er le ABRR
 			current_min = 0;
 			ParcoursInfixeAABRR(generate, (int)(q/p));
 			

@@ -1,3 +1,4 @@
+package application;
 
 public class AABRRversABR {
 	ABRR retour;
@@ -9,7 +10,7 @@ public class AABRRversABR {
 		retour = null;
 		
 		parcoursAABRR(arbre);
-		
+        
 		return retour;
 	}
 	
@@ -31,18 +32,21 @@ public class AABRRversABR {
 	
 	
 	private void ajoutElementABR(ABRR arbre, int x) {
-		if(arbre.getVal() >= x ) {
-			if(arbre.getSag() == null) {
-				arbre.setSag(new ABRR(x, null, null));
+		if(arbre != null){
+			if(arbre.getVal() >= x ) {
+				if(arbre.getSag() == null) {
+					arbre.setSag(new ABRR(x, null, null));
+				}else {
+					ajoutElementABR(arbre.getSag(), x);
+				}
 			}else {
-				ajoutElementABR(arbre.getSag(), x);
-			}
-		}else {
-			if(arbre.getSad() == null) {
-				arbre.setSad(new ABRR(x, null, null));
-			}else {
-				ajoutElementABR(arbre.getSad(), x);
+				if(arbre.getSad() == null) {
+					arbre.setSad(new ABRR(x, null, null));
+				}else {
+					ajoutElementABR(arbre.getSad(), x);
+				}
 			}
 		}
+		
 	}
 }

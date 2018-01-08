@@ -1,3 +1,4 @@
+package application;
 
 public class InsertionEntier {
 	public InsertionEntier() {
@@ -13,7 +14,7 @@ public class InsertionEntier {
 			retour = "Pas d AABRR dans l interval de x";
 		}else {
 			ajoutDansABRR(current_AABRR.getA(), x);
-			retour = x + " ajouté dans l interval " + current_AABRR.getMin() + " - " + current_AABRR.getMax();
+			retour = x + " ajoutï¿½ dans l interval " + current_AABRR.getMin() + " - " + current_AABRR.getMax();
 		}
 		return retour;
 	}
