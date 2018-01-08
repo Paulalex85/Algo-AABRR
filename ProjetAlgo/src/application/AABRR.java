@@ -110,28 +110,28 @@ public class AABRR {
 		return checkAABRR(this);
     }
 	
-	private boolean checkAABRR(AABRR a) {
+	private boolean checkAABRR(AABRR abr) {
 		//Teste si l'arbre est vide
-		if (a == null)
+		if (abr == null)
 			return true;
 		
 		//Teste si l'arbre ABR' de a est valide
-		if(!a.getA().checkABRR(a.min, a.max))
+		if(!abr.getA().checkABRR(abr.min, abr.max))
 			return false;
 		
 		//Teste si les fils droit et gauche de a sont à la bonne place
-		if ((a.sag != null) && (a.sag.getMin() > a.getMin()))
+		if ((abr.sag != null) && (abr.sag.getMin() > abr.getMin()))
 			return false;
-		if ((a.sad != null) && (a.sad.getMax() < a.getMax()))
+		if ((abr.sad != null) && (abr.sad.getMax() < abr.getMax()))
 			return false;
 		
 		//Teste si les intervalles des fils sont disjoints
-		if ((a.sag != null) && (a.sag.getMax() >= a.getMin()))
+		if ((abr.sag != null) && (abr.sag.getMax() >= abr.getMin()))
 			return false;
-		if ((a.sad != null) && (a.sad.getMin() <= a.getMax()))
+		if ((abr.sad != null) && (abr.sad.getMin() <= abr.getMax()))
 			return false;
 
-		return (checkAABRR(a.sag) && checkAABRR(a.sad));
+		return (checkAABRR(abr.sag) && checkAABRR(abr.sad));
     }
 	
 	public void fillAABRR(List<ArrayList<Integer>> data, int deb, int fin) {
@@ -159,24 +159,34 @@ public class AABRR {
 			}
 		}
 	}
-
-	public void deletteValueABRR(int value) {
-		System.out.println("Recherche de "+value+" dans l'AABRR :");
-		deletteValueABRR(value, this);
+	
+	private void deletteAABRR(AABRR aabrr){
+		
 	}
 	
-	public void deletteValueABRR(int value, AABRR a) {
-		if(value >= a.min && value <= a.max) {
-			System.out.println("La valeur se trouve dans l'intervalle "+a.min+" "+a.max);
+	public void deletteValueABRR(int value) {
+		System.out.println("Recherche de "+value+" dans l'AABRR :");
+		AABRR aabrr = new AABRR();
+		aabrr = deletteValueABRR(value, this);
+		if (aabrr != null) {
+			//deletteAABRR(aabrr);
+		}
+		
+	}
+	
+	public AABRR deletteValueABRR(int value, AABRR abr) {
+		if(value >= abr.min && value <= abr.max) {
+			System.out.println("La valeur se trouve dans l'intervalle "+abr.min+" "+abr.max);
 			//parcourt de l'arbre
-			ABRR ap = a.getA().searchValue(value);
+			ABRR ap = abr.getA().searchValue(value);
 			if(ap == null)
 				System.out.println("La valeur "+value+" ne se trouve pas dans l'ABRR de cet AABRR..." );
 			else {
 				System.out.println("La valeur "+value+" se trouve bien dans l'ABRR de cet AABRR" );
 				ap.deletteValue(value);
 				if(ap.getVal() == 0) {
-					System.out.println("Il faut supprimer cet AABBR !");
+					System.out.println("Il faut supprimer cet AABBR ! (à faire)");
+					return abr;
 				}
 				else {
 					ap.clean();
@@ -184,15 +194,16 @@ public class AABRR {
 			}
 				
 		}
-		else if (a.sag != null && value < a.min) {
-			deletteValueABRR(value, a.sag);
+		else if (abr.sag != null && value < abr.min) {
+			deletteValueABRR(value, abr.sag);
 		}
-		else if (a.sad != null && value > a.max) {
-			deletteValueABRR(value, a.sad);
+		else if (abr.sad != null && value > abr.max) {
+			deletteValueABRR(value, abr.sad);
 		}
 		else {
 			System.out.println("La valeur "+value+" ne se trouve pas dans l'AABRR..." );
 		}
+		return null;
 	}
 	
 	public void addValueABRR(int value, ABRR arbre) {

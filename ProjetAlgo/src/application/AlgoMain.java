@@ -7,10 +7,8 @@ public class AlgoMain {
 		AABRR a = new AABRR("./ressources/fichierTest.txt");
 		System.out.println("Affichage de l'AABRR importé : ");
 		System.out.println(a);
-		
+		System.out.println("ABR a correct ? "+(a.checkAABRR()?"oui.":"non."));
 		/*
-		System.out.println("ABR a correct ? "+a.checkAABRR());
-		
 		AABRR_Aleatoire aleatoire = new AABRR_Aleatoire();
 		AABRR_Vers_Fichier fichier = new AABRR_Vers_Fichier();
 		AABRR test = aleatoire.Generation(10, 100);
