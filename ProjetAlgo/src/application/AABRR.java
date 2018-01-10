@@ -23,7 +23,6 @@ public class AABRR {
 	}
 	
 	public AABRR(String fileName) {
-		
 		List<ArrayList<Integer>> dataInt = new ArrayList<ArrayList<Integer>>();
 		//theta(n)
 		try {
@@ -102,7 +101,7 @@ public class AABRR {
 	}
 	
 	private String Generate_String(AABRR arbre) {
-		String ligne = arbre.getMin() + ":" + arbre.getMax() + ";" + arbre.getA();
+		String ligne = arbre.getMin() + ":" + arbre.getMax() + ";" + (arbre.getA()==null?"ø":arbre.getA());
 		return ligne;
 	}
 	
@@ -114,6 +113,10 @@ public class AABRR {
 		//Teste si l'arbre est vide
 		if (abr == null)
 			return true;
+		
+		//Teste si l'intervalle du noeud est correct
+		if (abr.min >= abr.max || abr.min < 0 || abr.max < 0)
+			return false;
 		
 		//Teste si l'arbre ABR' de a est valide
 		if(!abr.getA().checkABRR(abr.min, abr.max))
@@ -170,54 +173,14 @@ public class AABRR {
 	
 	public void deletteValueABRR(int value) {
 		System.out.println("Recherche de "+value+" dans l'AABRR :");
-		deletteValueFromAABRR(value, this, null);
+		deletteValueFromAABRR(value, this);
 	}
 	
-	private AABRR deletteValueFromAABRR(int x, AABRR abr) {
-		  if (abr == null)
-		    return abr;
-		  if (x == abr.min)
-		    return deletteAABRR(abr);
-		  if (x < abr.min)
-		    abr.sag = deletteValueFromAABRR(x, abr.sag);
-		  else 
-		    abr.sad = deletteValueFromAABRR(x, abr.sad);
-		  return abr;
-		}
-	
-	public void deletteAABRR() {
-		AABRR abr = deletteAABRR(this);
-		this.a = abr.a;
-		this.min = abr.min;
-		this.max = abr.max;
-		this.sag = abr.sag;
-		this.sad = abr.sad;
-	}
-	
-	private AABRR deletteAABRR(AABRR abr) {
-	  if (abr.sag == null)
-		  return abr.sad;
-	  if (abr.sad == null)
-		  return abr.sag;
-	  AABRR gsag = abr.getGreatestSAD();
-	  abr.a = gsag.a;
-	  abr.min = gsag.min;
-	  abr.max = gsag.max;
-	  abr.sad = deletteValueFromAABRR(gsag.min, abr.sad);
-	  return abr;
-	}
-	
-	private void deletteValueFromAABRR(int value, AABRR abr, AABRR parent) {
+	private void deletteValueFromAABRR(int value, AABRR abr) {
 		if(value >= abr.min && value <= abr.max) {
 			System.out.println("La valeur se trouve dans l'intervalle "+abr.min+" "+abr.max);
 			if(abr.getA().getVal() == value && abr.getA().getSad() == null && abr.getA().getSag() == null) {
-				if(parent == null)
-					System.out.println("Supression du noeud racine impossible");
-				else {
-					System.out.println("Suppression de ce noeud requis");
-					//Il faut supprimer ce noeud
-					abr.deletteAABRR();
-				}
+				abr.a = null;
 			}
 			else {
 				//On récupère le noeud qui contient l'entier recherché
@@ -232,10 +195,10 @@ public class AABRR {
 			}
 		}
 		else if (abr.sag != null && value < abr.min) {
-			deletteValueFromAABRR(value, abr.sag, abr);
+			deletteValueFromAABRR(value, abr.sag);
 		}
 		else if (abr.sad != null && value > abr.max) {
-			deletteValueFromAABRR(value, abr.sad, abr);
+			deletteValueFromAABRR(value, abr.sad);
 		}
 		else {
 			System.out.println("La valeur "+value+" ne se trouve pas dans l'AABRR..." );

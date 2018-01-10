@@ -70,8 +70,6 @@ public class ABRR {
 			else
 				System.out.printf("|    ");
 		}
-			
-	
 		System.out.printf("["+a.val+"]\n");
 	    if (a.sag != null) 
 	    		aff(a.sag, prof + 1);
@@ -80,10 +78,7 @@ public class ABRR {
 	}
 	
 	public void afficherStruct() {
-		if (this != null)
-			aff(this, 1);
-		else
-			System.out.println("[Ø]");
+		aff(this, 1);
 	}
 
 	public List<Integer> get_list_prefixe(){

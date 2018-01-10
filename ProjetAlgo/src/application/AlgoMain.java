@@ -13,12 +13,8 @@ public class AlgoMain {
 		AABRR_Vers_Fichier fichier = new AABRR_Vers_Fichier();
 		AABRR test = aleatoire.Generation(10, 100);
 		fichier.execute(test, "testjambon");
-		
-		aabrr.deletteValueABRR(32);
-		aabrr.deletteValueABRR(80);
 		*/
-		
-		aabrr.deletteValueABRR(9);
-		System.out.println(aabrr.getSag());
+		aabrr.deletteValueABRR(80);
+		System.out.println(aabrr);
 	}
 }
