@@ -160,50 +160,86 @@ public class AABRR {
 		}
 	}
 	
-	private void deletteAABRR(AABRR aabrr){
-		
+	private AABRR getGreatestSAD() {
+		return getGreatestSAD(sad);
+	}
+	
+	private AABRR getGreatestSAD(AABRR abr) {
+		return abr.sag == null ? abr : getGreatestSAD(abr.sag);
 	}
 	
 	public void deletteValueABRR(int value) {
 		System.out.println("Recherche de "+value+" dans l'AABRR :");
-		AABRR aabrr = new AABRR();
-		aabrr = deletteValueABRR(value, this);
-		if (aabrr != null) {
-			//deletteAABRR(aabrr);
-		}
-		
+		deletteValueFromAABRR(value, this, null);
 	}
 	
-	public AABRR deletteValueABRR(int value, AABRR abr) {
+	private AABRR deletteValueFromAABRR(int x, AABRR abr) {
+		  if (abr == null)
+		    return abr;
+		  if (x == abr.min)
+		    return deletteAABRR(abr);
+		  if (x < abr.min)
+		    abr.sag = deletteValueFromAABRR(x, abr.sag);
+		  else 
+		    abr.sad = deletteValueFromAABRR(x, abr.sad);
+		  return abr;
+		}
+	
+	public void deletteAABRR() {
+		AABRR abr = deletteAABRR(this);
+		this.a = abr.a;
+		this.min = abr.min;
+		this.max = abr.max;
+		this.sag = abr.sag;
+		this.sad = abr.sad;
+	}
+	
+	private AABRR deletteAABRR(AABRR abr) {
+	  if (abr.sag == null)
+		  return abr.sad;
+	  if (abr.sad == null)
+		  return abr.sag;
+	  AABRR gsag = abr.getGreatestSAD();
+	  abr.a = gsag.a;
+	  abr.min = gsag.min;
+	  abr.max = gsag.max;
+	  abr.sad = deletteValueFromAABRR(gsag.min, abr.sad);
+	  return abr;
+	}
+	
+	private void deletteValueFromAABRR(int value, AABRR abr, AABRR parent) {
 		if(value >= abr.min && value <= abr.max) {
 			System.out.println("La valeur se trouve dans l'intervalle "+abr.min+" "+abr.max);
-			//parcourt de l'arbre
-			ABRR ap = abr.getA().searchValue(value);
-			if(ap == null)
-				System.out.println("La valeur "+value+" ne se trouve pas dans l'ABRR de cet AABRR..." );
-			else {
-				System.out.println("La valeur "+value+" se trouve bien dans l'ABRR de cet AABRR" );
-				ap.deletteValue(value);
-				if(ap.getVal() == 0) {
-					System.out.println("Il faut supprimer cet AABBR ! (à faire)");
-					return abr;
-				}
+			if(abr.getA().getVal() == value && abr.getA().getSad() == null && abr.getA().getSag() == null) {
+				if(parent == null)
+					System.out.println("Supression du noeud racine impossible");
 				else {
-					ap.clean();
+					System.out.println("Suppression de ce noeud requis");
+					//Il faut supprimer ce noeud
+					abr.deletteAABRR();
 				}
 			}
-				
+			else {
+				//On récupère le noeud qui contient l'entier recherché
+				ABRR ap = abr.getA().searchValue(value);
+				if(ap == null)
+					System.out.println("La valeur "+value+" ne se trouve pas dans l'ABRR de cet AABRR..." );
+				else {
+					System.out.println("La valeur "+value+" se trouve bien dans l'ABRR de cet AABRR" );
+					//On supprime ce noeud
+					ap.deletteABRR();
+				}
+			}
 		}
 		else if (abr.sag != null && value < abr.min) {
-			deletteValueABRR(value, abr.sag);
+			deletteValueFromAABRR(value, abr.sag, abr);
 		}
 		else if (abr.sad != null && value > abr.max) {
-			deletteValueABRR(value, abr.sad);
+			deletteValueFromAABRR(value, abr.sad, abr);
 		}
 		else {
 			System.out.println("La valeur "+value+" ne se trouve pas dans l'AABRR..." );
 		}
-		return null;
 	}
 	
 	public void addValueABRR(int value, ABRR arbre) {

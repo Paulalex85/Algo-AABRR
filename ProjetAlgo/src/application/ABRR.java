@@ -80,7 +80,10 @@ public class ABRR {
 	}
 	
 	public void afficherStruct() {
-		aff(this, 1);
+		if (this != null)
+			aff(this, 1);
+		else
+			System.out.println("[Ø]");
 	}
 
 	public List<Integer> get_list_prefixe(){
@@ -139,60 +142,61 @@ public class ABRR {
 			return null;
 	}
 	
-	public void deletteValue(int value) {
-		/*3 cas
-		 * 1er : a est feuille => suppression immédiate
-		 * 2eme : a possède un fils => remplacement de a par ce fils
-		 * 3 eme : a possède 2 fils => echanger a par le plus grand 
-		 * 	fils du sag de a et ensuite supprimer a (qui possède 
-		 * 	0 ou 1 fils)
-		 * */
-		//1er : a est feuille => suppression immédiate
-		if(sag == null && sad == null) {
-			val = -1;
-		}
-		else if(sag == null && sad != null) {
-			val = sad.val;
-			sad.val = -1;
-		}
-		else if(sag != null && sad == null) {
-			val = sag.val;
-			sag.val = -1;
-		}
-		else {
-			ABRR gsa = getGreatestSAG();
-			val = gsa.val;
-			gsa.val = -1;
-		}
-	}
-	
 	private ABRR getGreatestSAG() {
 		return getGreatestSAG(sag);
 	}
 	
-	private ABRR getGreatestSAG(ABRR a) {
-		return a.sad == null ? a : getGreatestSAG(a.sad);
+	private ABRR getGreatestSAG(ABRR abr) {
+		return abr.sad == null ? abr : getGreatestSAG(abr.sad);
 	}
 	
-	public void clean() {
-		if(sad != null && sad.val == -1) {
-			sad = null;
-		}
-		else if(sag != null && sag.val == -1) {
-			sag = null;
-		}
+	/*3 cas
+	 * 1er : a est feuille => suppression immédiate (impossible si seul noeud dans arbre)
+	 * 2eme : a possède un fils => remplacement de a par ce fils
+	 * 3 eme : a possède 2 fils => echanger a par le plus grand 
+	 * 	fils du sag de a et ensuite supprimer a (qui possède 
+	 * 	0 ou 1 fils)
+	 * */
+	private ABRR deletteValueFromABRR(int x, ABRR abr) {
+	  if (abr == null)
+	    return abr;
+	  if (x == abr.val)
+	    return deletteABRR(abr);
+	  if (x > abr.val)
+	    abr.sag = deletteValueFromABRR(x, abr.sag);
+	  else 
+	    abr.sad = deletteValueFromABRR(x, abr.sad);
+	  return abr;
 	}
 	
-    private boolean checkABRR(ABRR a, int min, int max) {
-		if (a == null)
+	public void deletteABRR() {
+		ABRR abr = deletteABRR(this);
+		this.val = abr.val;
+		this.sag = abr.sag;
+		this.sad = abr.sad;
+	}
+	
+	private ABRR deletteABRR(ABRR abr) {
+	  if (abr.sag == null)
+		  return abr.sad;
+	  if (abr.sad == null)
+		  return abr.sag;
+	  ABRR gsag = abr.getGreatestSAG();
+	  abr.val = gsag.val;
+	  abr.sag = deletteValueFromABRR(gsag.val, abr.sag);
+	  return abr;
+	}
+	
+    private boolean checkABRR(ABRR abr, int min, int max) {
+		if (abr == null)
 			return true;
-		if (a.val < min || a.val > max)
+		if (abr.val < min || abr.val > max)
 			return false;
-		if ((a.sag != null) && (a.sag.getVal() < a.getVal()))
+		if ((abr.sag != null) && (abr.sag.getVal() < abr.getVal()))
 			return false;
-		if ((a.sad != null) && (a.sad.getVal() > a.getVal()))
+		if ((abr.sad != null) && (abr.sad.getVal() > abr.getVal()))
 			return false;
-		return (checkABRR(a.sag, min, max) && checkABRR(a.sad, min, max));
+		return (checkABRR(abr.sag, min, max) && checkABRR(abr.sad, min, max));
     }
 
 }
