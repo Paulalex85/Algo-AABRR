@@ -14,7 +14,7 @@ public class InsertionEntier {
 			retour = "Pas d AABRR dans l interval de x";
 		}else {
 			ajoutDansABRR(current_AABRR.getA(), x);
-			retour = x + " ajout� dans l interval " + current_AABRR.getMin() + " - " + current_AABRR.getMax();
+			retour = x + " ajoute dans l interval " + current_AABRR.getMin() + " - " + current_AABRR.getMax();
 		}
 		return retour;
 	}
@@ -26,7 +26,7 @@ public class InsertionEntier {
 			if(arbre.getMin() <= x && arbre.getMax() >= x) {
 				return arbre;
 			}
-			else if( arbre.getMin() < x) {
+			else if( arbre.getMin() > x) {
 				return rechercheAABRR(arbre.getSag(), x);
 			}else {
 				return rechercheAABRR(arbre.getSad(), x);

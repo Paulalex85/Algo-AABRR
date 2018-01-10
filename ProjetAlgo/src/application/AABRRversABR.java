@@ -32,7 +32,10 @@ public class AABRRversABR {
 	
 	
 	private void ajoutElementABR(ABRR arbre, int x) {
-		if(arbre != null){
+		if(retour == null) {
+			retour = new ABRR(x,null,null);
+		}
+		else if(arbre != null){
 			if(arbre.getVal() >= x ) {
 				if(arbre.getSag() == null) {
 					arbre.setSag(new ABRR(x, null, null));
@@ -47,6 +50,5 @@ public class AABRRversABR {
 				}
 			}
 		}
-		
 	}
 }

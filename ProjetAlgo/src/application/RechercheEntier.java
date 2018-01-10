@@ -10,9 +10,9 @@ public class RechercheEntier {
 			reponse = x + " n est dans aucun AABRR";
 		}else {
 			if(parcoursABRR(currentAABRR.getA(), x) == null) {
-				reponse = x + "n existe pas dans l interval " + currentAABRR.getMin() + " - " + currentAABRR.getMax(); 
+				reponse = x + " n existe pas dans l interval " + currentAABRR.getMin() + " - " + currentAABRR.getMax(); 
 			}else {
-				reponse = x + "est dans l interval " + currentAABRR.getMin() + " - " + currentAABRR.getMax(); 
+				reponse = x + " est dans l interval " + currentAABRR.getMin() + " - " + currentAABRR.getMax(); 
 			}
 		}
 		
@@ -44,10 +44,10 @@ public class RechercheEntier {
 			if(arbre.getVal() == x) {
 				return arbre;
 			}else if(arbre.getVal() > x ) {
-				return parcoursABRR(arbre.getSag(), x);
+				return parcoursABRR(arbre.getSad(), x);
 			}
 			else {
-				return parcoursABRR(arbre.getSad(), x);
+				return parcoursABRR(arbre.getSag(), x);
 			}
 		}
 		else {
