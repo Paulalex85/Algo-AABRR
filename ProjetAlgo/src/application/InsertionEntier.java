@@ -7,13 +7,16 @@ public class InsertionEntier {
 	
 	public String insertion(AABRR arbre, int x) {
 		String retour = "";
-		
 		AABRR current_AABRR = rechercheAABRR(arbre, x);
 		
 		if(current_AABRR == null) {
 			retour = "Pas d AABRR dans l interval de x";
 		}else {
-			ajoutDansABRR(current_AABRR.getA(), x);
+			ABRR a = current_AABRR.getA();
+			if(a == null)
+				current_AABRR.setA(new ABRR(x));
+			else
+				ajoutDansABRR(current_AABRR.getA(), x);
 			retour = x + " ajoute dans l interval " + current_AABRR.getMin() + " - " + current_AABRR.getMax();
 		}
 		return retour;
@@ -41,7 +44,8 @@ public class InsertionEntier {
 			}else {
 				ajoutDansABRR(arbre.getSag(), x);
 			}
-		}else {
+		}
+		else {
 			if(arbre.getSad() == null) {
 				arbre.setSad(new ABRR(x, null, null));
 			}else {

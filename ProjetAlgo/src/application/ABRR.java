@@ -14,6 +14,10 @@ public class ABRR {
 		this.sad = sad;
 	}
 	
+	public ABRR (int val) {
+		this.val = val;
+	}
+	
 	public ABRR () {
 	}
 
@@ -63,6 +67,78 @@ public class ABRR {
 		}
 	}
 	
+	public AABRR convertToAABRR(int k) {
+		AABRR aabrr = new AABRR();
+		if(k>0) {
+			int max = this.getMax();
+			int min = this.getMin();
+			ArrayList<ArrayList<Integer>> listeIntervalles = new ArrayList<ArrayList<Integer>>();
+			int ecart = (max - min)/k;
+			int val = min-1;
+			for(int i = 0; i<k; i ++) {
+				ArrayList<Integer> intervalle = new ArrayList<Integer>();
+				val += (ecart+1);
+				intervalle.add(val-ecart);
+				if (i==k-1)
+					intervalle.add(max);
+				else
+					intervalle.add(val);
+				listeIntervalles.add(intervalle);
+			}
+			aabrr = generateAABRR(listeIntervalles, listeIntervalles.size()/2, listeIntervalles.size()/2, listeIntervalles.size()-1-listeIntervalles.size()/2);
+			InsertionEntier insert = new InsertionEntier();
+			for(int el : get_list_prefixe()) {
+				//System.out.println(el + " " + insert.insertion(aabrr, el));
+				insert.insertion(aabrr, el);
+			}
+		}
+		else {
+			System.out.println("k ne peut etre négatif");
+			return null;
+		}
+		return aabrr;
+	}
+	
+	private AABRR generateAABRR(ArrayList<ArrayList<Integer>> listeIntervalles, int rac, int tsag, int tsad) {
+		AABRR aabrr = new AABRR();
+		aabrr.setMin(listeIntervalles.get(rac).get(0));
+		aabrr.setMax(listeIntervalles.get(rac).get(1));
+		int sag = rac-(1+tsag/2);
+		int sad = rac+(1+tsad/2);
+		int ntsag = tsag-1;
+		int ntsad = tsad-1;
+		
+		if(tsag > 0) {
+			aabrr.setSag(generateAABRR(listeIntervalles, sag, ntsag/2, ntsag-ntsag/2));
+		}
+		if(tsad > 0){
+			aabrr.setSad(generateAABRR(listeIntervalles, sad, ntsad+ntsad/2, ntsad/2));
+		}
+		return aabrr;
+	}
+	
+	private int getMin() {
+		return getMin(this.sag);
+	}
+	
+	private int getMin(ABRR abr) {
+		if (abr.sag == null) {
+			return abr.val;
+		}
+		return getMin(abr.sag);
+	}
+	
+	private int getMax() {
+		return getMax(this.sad);
+	}
+	
+	private int getMax(ABRR abr) {
+		if (abr.sad == null) {
+			return abr.val;
+		}
+		return getMax(abr.sad);
+	}
+	
 	private void aff(ABRR a, int prof) {
 		for (int i=1; i < prof; i++) {
 			if(i+1 == prof)
@@ -103,6 +179,11 @@ public class ABRR {
 		return ligne;
 	}
 	
+	public List<Integer> parcours_prefixe(){
+		List<Integer> l = new ArrayList<Integer>();
+		return parcours_prefixe(this, l);
+	}
+	
 	private List<Integer> parcours_prefixe(ABRR arbre, List<Integer> list) {
 		list.add(arbre.val);
 		if(arbre.sag != null) {
@@ -113,6 +194,42 @@ public class ABRR {
 			parcours_prefixe(arbre.sad, list);
 		}
 		
+		return list;
+	}
+	
+	public List<Integer> parcours_infixe(){
+		List<Integer> l = new ArrayList<Integer>();
+		return parcours_infixe(this, l);
+	}
+	
+	private List<Integer> parcours_infixe(ABRR arbre, List<Integer> list) {
+		
+		if(arbre.sag != null) {
+			parcours_prefixe(arbre.sag, list);
+		}
+		list.add(arbre.val);
+		if(arbre.sad != null) {
+			parcours_prefixe(arbre.sad, list);
+		}
+		
+		return list;
+	}
+	
+	public List<Integer> parcours_sufixe(){
+		List<Integer> l = new ArrayList<Integer>();
+		return parcours_sufixe(this, l);
+	}
+	
+	private List<Integer> parcours_sufixe(ABRR arbre, List<Integer> list) {
+		
+		if(arbre.sag != null) {
+			parcours_prefixe(arbre.sag, list);
+		}
+		
+		if(arbre.sad != null) {
+			parcours_prefixe(arbre.sad, list);
+		}
+		list.add(arbre.val);
 		return list;
 	}
 	

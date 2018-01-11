@@ -5,7 +5,7 @@ public class AlgoMain {
 		// TODO Auto-generated method stub
 		//importation d'un fichier
 		/*AABRR aabrr = new AABRR("./ressources/fichierTest.txt");
-		System.out.println("Affichage de l'AABRR importé : ");
+		System.out.println("Affichage de l'AABRR importï¿½ : ");
 		System.out.println(aabrr);
 		System.out.println("ABR a correct ? "+(aabrr.checkAABRR()?"oui.":"non."));
 		/*
@@ -26,27 +26,17 @@ public class AlgoMain {
 		InsertionEntier insert = new InsertionEntier();
 		AABRRversABR toAbr = new AABRRversABR();
 		
-		AABRR aabrr = aleatoire.Generation(10, 100);
-		//System.out.println(aabrr);
-		/*System.out.println(recherche.Rechercher(2, aabrr));
-		System.out.println(recherche.Rechercher(5, aabrr));
-		System.out.println(recherche.Rechercher(6, aabrr));*/
 		
-		System.out.println(insert.insertion(aabrr, 2));
-		System.out.println(insert.insertion(aabrr, 3));
-		System.out.println(insert.insertion(aabrr, 4));
-		
-		System.out.println(recherche.Rechercher(2, aabrr));
-		System.out.println(recherche.Rechercher(3, aabrr));
-		System.out.println(recherche.Rechercher(4, aabrr));
-		
-		System.out.println(aabrr);
 		
 		System.out.println("********");
-		
+		AABRR aabrr = new AABRR("./ressources/fichierTest2.txt");
+		System.out.println(aabrr);
+		System.out.println("********");
 		ABRR test = toAbr.transformationVersABR(aabrr);
-		
 		test.afficherStruct();
+		System.out.println("**********");
+		AABRR testaabrr = test.convertToAABRR(3);
+		System.out.println(testaabrr);
 		
 		
 		
