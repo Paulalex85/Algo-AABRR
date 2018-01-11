@@ -183,15 +183,15 @@ public class AABRR {
 				abr.a = null;
 			}
 			else {
-				//On récupère le noeud qui contient l'entier recherché
-				ABRR ap = abr.getA().searchValue(value);
-				if(ap == null)
-					System.out.println("La valeur "+value+" ne se trouve pas dans l'ABRR de cet AABRR..." );
-				else {
+				//On regarde si l'arbre possède la valeur recherchée
+				System.out.println(abr.getA().searchValue(value));
+				if(abr.getA().searchValue(value)) {
 					System.out.println("La valeur "+value+" se trouve bien dans l'ABRR de cet AABRR" );
-					//On supprime ce noeud
-					ap.deletteABRR();
+					//on supprime la valeur de l'arbre
+					abr.getA().deletteValueFromABRR(value);
 				}
+				else
+					System.out.println("La valeur "+value+" ne se trouve pas dans l'ABRR de cet AABRR..." );
 			}
 		}
 		else if (abr.sag != null && value < abr.min) {
@@ -204,7 +204,8 @@ public class AABRR {
 			System.out.println("La valeur "+value+" ne se trouve pas dans l'AABRR..." );
 		}
 	}
-	
+
+
 	public void addValueABRR(int value, ABRR arbre) {
 		ABRR current_arbre;
 		boolean ajoute = false;

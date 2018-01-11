@@ -237,21 +237,21 @@ public class ABRR {
 		return checkABRR(this, min, max);
     }
 	
-	public ABRR searchValue(int value) {
+	public boolean searchValue(int value) {
 		return searchValue(value, this);
 	}
 	
-	private ABRR searchValue(int value, ABRR a) {
+	private boolean searchValue(int value, ABRR a) {
 		if(a != null) {
 			if(a.val == value)
-				return a;
+				return true;
 			else if(a.val < value )
 				return searchValue(value, a.sag);
 			else
 				return searchValue(value, a.sad);
 		}
 		else
-			return null;
+			return false;
 	}
 	
 	private ABRR getGreatestSAG() {
@@ -260,6 +260,13 @@ public class ABRR {
 	
 	private ABRR getGreatestSAG(ABRR abr) {
 		return abr.sad == null ? abr : getGreatestSAG(abr.sad);
+	}
+	
+	public void deletteValueFromABRR(int x) {
+		ABRR abr = deletteValueFromABRR(x, this);
+		this.val = abr.val;
+		this.sag = abr.sag;
+		this.sad = abr.sad;
 	}
 	
 	/*3 cas
@@ -272,20 +279,14 @@ public class ABRR {
 	private ABRR deletteValueFromABRR(int x, ABRR abr) {
 	  if (abr == null)
 	    return abr;
-	  if (x == abr.val)
-	    return deletteABRR(abr);
+	  if (x == abr.val) {
+		  return deletteABRR(abr);
+	  }
 	  if (x > abr.val)
 	    abr.sag = deletteValueFromABRR(x, abr.sag);
 	  else 
 	    abr.sad = deletteValueFromABRR(x, abr.sad);
 	  return abr;
-	}
-	
-	public void deletteABRR() {
-		ABRR abr = deletteABRR(this);
-		this.val = abr.val;
-		this.sag = abr.sag;
-		this.sad = abr.sad;
 	}
 	
 	private ABRR deletteABRR(ABRR abr) {
