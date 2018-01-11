@@ -38,11 +38,13 @@ public class AlgoMain {
 				break;
 			case 1:
 				System.out.println("Entrer le chemin du fichier");
+				sc.nextLine();
 				String chemin = sc.nextLine();
 				aabrr = new AABRR(chemin);
 				break;
 			case 2:
-				System.out.println("Entrer le nom du fichier");
+				System.out.println("Entrer le nom du fichier sans l'extention");
+				sc.nextLine();
 				String nom_fichier = sc.nextLine();
 				fichier.execute(aabrr, nom_fichier);
 				break;
